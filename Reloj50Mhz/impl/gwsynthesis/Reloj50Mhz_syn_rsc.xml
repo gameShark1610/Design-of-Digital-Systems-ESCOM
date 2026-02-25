@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module name="Top_Principal" T_Register="57(0)" T_Lut="117(0)">
+ <SubModule name="Instancia_PLL"/>
+ <SubModule name="Instancia_Reloj" Register="57" Lut="117" T_Register="57(57)" T_Lut="117(117)"/>
+</Module>

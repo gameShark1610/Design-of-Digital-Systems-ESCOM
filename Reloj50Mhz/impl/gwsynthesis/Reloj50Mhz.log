@@ -1,0 +1,34 @@
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\gowin_rpll\gowin_rpll.v'
+Analyzing VHDL file 'C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Reloj50Mhz.vhd'
+Analyzing entity 'reloj50mhz'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Reloj50Mhz.vhd":4)
+Analyzing architecture 'divisor'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Reloj50Mhz.vhd":12)
+Analyzing VHDL file 'C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Top_Principal.vhd'
+Analyzing entity 'top_principal'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Top_Principal.vhd":4)
+Analyzing architecture 'structural'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Top_Principal.vhd":12)
+Compiling module 'Gowin_rPLL'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\gowin_rpll\gowin_rpll.v":10)
+Processing 'Reloj50Mhz(divisor)'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Reloj50Mhz.vhd":4)
+Processing 'Top_Principal(structural)'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Top_Principal.vhd":4)
+Switching to Verilog mode to elaborate module 'gowin_rpll'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Top_Principal.vhd":41)
+Returning to VHDL mode to continue with elaboration("C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\src\Top_Principal.vhd":41)
+NOTE  (EX0101) : Current top module is "Top_Principal"
+[5%] Running netlist conversion ...
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+[95%] Generate netlist file "C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\impl\gwsynthesis\Reloj50Mhz.vg" completed
+[100%] Generate report file "C:\Users\arvay\Documents\Proyectos Gowin\DSD\Reloj50Mhz\impl\gwsynthesis\Reloj50Mhz_syn.rpt.html" completed
+GowinSynthesis finish

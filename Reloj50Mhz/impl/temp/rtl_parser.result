@@ -1,0 +1,28 @@
+[
+ {
+  "InstFile" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/Reloj50Mhz/src/Top_Principal.vhd",
+  "InstLine" : 4,
+  "InstName" : "Top_Principal",
+  "ModuleFile" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/Reloj50Mhz/src/Top_Principal.vhd",
+  "ModuleLine" : 4,
+  "ModuleName" : "Top_Principal",
+  "SubInsts" : [
+   {
+    "InstFile" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/Reloj50Mhz/src/Top_Principal.vhd",
+    "InstLine" : 37,
+    "InstName" : "Instancia_PLL",
+    "ModuleFile" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/Reloj50Mhz/src/gowin_rpll/gowin_rpll.v",
+    "ModuleLine" : 10,
+    "ModuleName" : "Gowin_rPLL"
+   },
+   {
+    "InstFile" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/Reloj50Mhz/src/Top_Principal.vhd",
+    "InstLine" : 44,
+    "InstName" : "Instancia_Reloj",
+    "ModuleFile" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/Reloj50Mhz/src/Reloj50Mhz.vhd",
+    "ModuleLine" : 4,
+    "ModuleName" : "Reloj50Mhz"
+   }
+  ]
+ }
+]
