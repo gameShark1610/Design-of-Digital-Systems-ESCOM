@@ -2,7 +2,7 @@ GowinSynthesis start
 Running parser ...
 Analyzing VHDL file 'C:\Users\arvay\Documents\Proyectos Gowin\DSD\reloj\src\reloj.vhd'
 Analyzing entity 'reloj'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\reloj\src\reloj.vhd":4)
-Analyzing architecture 'divisor'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\reloj\src\reloj.vhd":15)
+Analyzing architecture 'divisor'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\reloj\src\reloj.vhd":16)
 Processing 'Reloj(divisor)'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\reloj\src\reloj.vhd":4)
 NOTE  (EX0101) : Current top module is "Reloj"
 [5%] Running netlist conversion ...
