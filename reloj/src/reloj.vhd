@@ -5,11 +5,11 @@ entity Reloj is
 port(
     clk: in std_logic;   -- 27MHz
     reset: in std_logic; -- Pin 3
-    s1: out std_logic;   -- Pin 10
-    s2: out std_logic;   -- Pin 11
-    s3: out std_logic;   -- Pin 13
-    s4: out std_logic;   -- Pin 14
-    s5: out std_logic    -- Pin 15
+    s1: out std_logic;   -- Pin 70
+    s2: out std_logic;   -- Pin 71
+    s3: out std_logic;   -- Pin 72
+    s4: out std_logic;   -- Pin 73
+    s5: out std_logic    -- Pin 74
 );	
 end Reloj;
 
@@ -19,7 +19,7 @@ architecture divisor of Reloj is
     type arreglo_frecuencias is array (1 to 5) of integer;
 
     -- ARREGLO 1: Valores originales
-    --constant LIMITES : arreglo_frecuencias := (0, 1, 12, 134, 2699999); -- 20Mhz, 15Mhz, 1Mhz, 100Khz, 5Hz 
+    --constant LIMITES : arreglo_frecuencias := (0, 1, 12, 134, 2699999); -- 13Mhz, 1Mhz, 65khz, 25hz, 5Hz 
 
     -- ARREGLO 2: Frecuencias Originales
     constant LIMITES : arreglo_frecuencias := (0, 0, 12, 134, 2699999); -- 20Mhz, 15Mhz, 1Mhz, 100Khz, 5Hz  Daria (13.5 MHz, 13.5 MHz, 1Mhz, 100Khz, 5Hz)
@@ -43,21 +43,8 @@ architecture divisor of Reloj is
 begin
 
     -- Divisor 1 (Incluyendo s1 con contador en cero al iniciar)
-    Divisor_frecuencia1: process (clk, reset)
-    begin
-        if reset = '0' then
-            salida_media1 <= '0';
-            contador1 <= 0;
-        elsif rising_edge(clk) then
-            if contador1 >= LIMITES(1) then
-                contador1 <= 0;
-                salida_media1 <= not salida_media1;
-            else
-                contador1 <= contador1 + 1;
-            end if;
-        end if;
-    end process;
-    s1 <= salida_media1;
+    
+    s1 <= clk;
 
     -- Divisor 2
     Divisor_frecuencia2: process (clk, reset)
