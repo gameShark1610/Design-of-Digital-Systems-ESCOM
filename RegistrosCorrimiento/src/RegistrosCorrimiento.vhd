@@ -9,7 +9,7 @@ entity RegistrosCorrimiento is
         d_in     : in  std_logic_vector(7 downto 0);
         --s_in     : in  std_logic;
         modo     : in  std_logic_vector(2 downto 0);
-        q_out    : out std_logic_vector(7 downto 0);
+        q_out    : out std_logic_vector(7 downto 0)
         --s_out    : out std_logic
     );
 end RegistrosCorrimiento;

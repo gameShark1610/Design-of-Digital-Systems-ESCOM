@@ -3,12 +3,12 @@
  "Files" : [
   {
    "Library" : "work",
-   "Path" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/RegistrosCorrimiento/src/RegistrosCorrimiento.vhd",
+   "Path" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/RegistrosCorrimiento/src/DivisorFrecuencia.vhd",
    "Type" : "vhdl"
   },
   {
    "Library" : "work",
-   "Path" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/RegistrosCorrimiento/src/DivisorFrecuencia.vhd",
+   "Path" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/RegistrosCorrimiento/src/RegistrosCorrimiento.vhd",
    "Type" : "vhdl"
   }
  ],

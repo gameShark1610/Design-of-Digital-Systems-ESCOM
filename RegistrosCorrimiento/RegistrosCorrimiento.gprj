@@ -7,5 +7,6 @@
     <FileList>
         <File path="src/DivisorFrecuencia.vhd" type="file.vhdl" enable="1"/>
         <File path="src/RegistrosCorrimiento.vhd" type="file.vhdl" enable="1"/>
+        <File path="src/RegistrosCorrimiento.cst" type="file.cst" enable="1"/>
     </FileList>
 </Project>
