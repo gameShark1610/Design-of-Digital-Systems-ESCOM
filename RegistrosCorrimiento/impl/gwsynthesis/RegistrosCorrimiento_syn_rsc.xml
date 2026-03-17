@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Module name="RegistrosCorrimiento" Register="8" Lut="28" T_Register="31(8)" T_Lut="71(28)">
+<Module name="RegistrosCorrimiento" Register="12" Lut="45" T_Register="35(12)" T_Lut="88(45)">
  <SubModule name="Reloj_5Hz" Register="23" Lut="43" T_Register="23(23)" T_Lut="43(43)"/>
 </Module>

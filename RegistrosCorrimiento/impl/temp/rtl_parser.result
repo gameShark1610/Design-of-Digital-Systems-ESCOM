@@ -9,7 +9,7 @@
   "SubInsts" : [
    {
     "InstFile" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/RegistrosCorrimiento/src/RegistrosCorrimiento.vhd",
-    "InstLine" : 35,
+    "InstLine" : 31,
     "InstName" : "Reloj_5Hz",
     "ModuleFile" : "C:/Users/arvay/Documents/Proyectos Gowin/DSD/RegistrosCorrimiento/src/DivisorFrecuencia.vhd",
     "ModuleLine" : 4,

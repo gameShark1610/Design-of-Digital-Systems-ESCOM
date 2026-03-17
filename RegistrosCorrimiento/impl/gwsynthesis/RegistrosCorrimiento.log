@@ -5,7 +5,7 @@ Analyzing entity 'divisorfrecuencia'("C:\Users\arvay\Documents\Proyectos Gowin\D
 Analyzing architecture 'comportamiento'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\RegistrosCorrimiento\src\DivisorFrecuencia.vhd":12)
 Analyzing VHDL file 'C:\Users\arvay\Documents\Proyectos Gowin\DSD\RegistrosCorrimiento\src\RegistrosCorrimiento.vhd'
 Analyzing entity 'registroscorrimiento'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\RegistrosCorrimiento\src\RegistrosCorrimiento.vhd":4)
-Analyzing architecture 'comportamiento'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\RegistrosCorrimiento\src\RegistrosCorrimiento.vhd":17)
+Analyzing architecture 'comportamiento'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\RegistrosCorrimiento\src\RegistrosCorrimiento.vhd":15)
 Processing 'RegistrosCorrimiento(comportamiento)'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\RegistrosCorrimiento\src\RegistrosCorrimiento.vhd":4)
 Processing 'DivisorFrecuencia(comportamiento)'("C:\Users\arvay\Documents\Proyectos Gowin\DSD\RegistrosCorrimiento\src\DivisorFrecuencia.vhd":4)
 NOTE  (EX0101) : Current top module is "RegistrosCorrimiento"
