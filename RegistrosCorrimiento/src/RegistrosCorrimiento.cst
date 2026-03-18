@@ -7,7 +7,7 @@
 //Device Version: C
 //Created Time: Wed 03 04 09:00:43 2026
 
-IO_LOC "q_out[7]" 63;
+IO_LOC "q_out[  7]" 63;
 IO_PORT "q_out[7]" IO_TYPE=LVCMOS18 PULL_MODE=UP DRIVE=8 BANK_VCCIO=1.8;
 IO_LOC "q_out[6]" 86;
 IO_PORT "q_out[6]" IO_TYPE=LVCMOS18 PULL_MODE=UP DRIVE=8 BANK_VCCIO=1.8;
