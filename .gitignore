@@ -1,0 +1,16 @@
+# Gowin EDA - Archivos generados e implementación
+impl/
+stdout.log
+*.fs
+*.db
+*.log
+*.tmp
+*.bak
+
+# Configuración de usuario
+*.gws
+*.view
+
+# Archivos de sistema (Windows)
+Thumbs.db
+desktop.ini
