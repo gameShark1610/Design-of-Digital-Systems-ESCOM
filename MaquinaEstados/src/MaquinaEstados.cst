@@ -1,0 +1,12 @@
+// Archivo de restricciones físicas (.cst)
+IO_LOC "Z" 10;
+IO_PORT "Z" IO_TYPE=LVCMOS18 PULL_MODE=UP DRIVE=8;
+
+IO_LOC "X" 3;
+IO_PORT "X" IO_TYPE=LVCMOS18 PULL_MODE=DOWN;
+
+IO_LOC "clk" 52;
+IO_PORT "clk" IO_TYPE=LVCMOS18 PULL_MODE=UP;
+
+IO_LOC "monitor" 14;
+IO_PORT "monitor" IO_TYPE=LVCMOS18 PULL_MODE=UP;
