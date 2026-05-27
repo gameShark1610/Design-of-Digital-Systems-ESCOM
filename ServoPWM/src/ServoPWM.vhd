@@ -1,69 +1,96 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
-entity ServoPWM is
-    port(
-        clk     : in  std_logic; -- Pin 52 (27 MHz)
-        rst     : in  std_logic; -- Pin 3 (Botón S1)
-        cerrar  : in  std_logic; -- Pin 32
-        pwm_out : out std_logic  -- Pin 31
+entity control_garra is
+    Port (
+        clk      : in  STD_LOGIC; -- Pin 52 (27MHz)
+        rst      : in  STD_LOGIC; -- Pin 3 (Reset)
+        enc_clk  : in  STD_LOGIC; -- Pin 33 (Encoder Clock)
+        enc_dt   : in  STD_LOGIC; -- Pin 34 (Encoder Data)
+        cerrar   : in  STD_LOGIC; -- Pin 32 (Encoder Switch)
+        pwm_out  : out STD_LOGIC  -- Pin 31 (Señal al Servo MG995)
     );
-end ServoPWM;
+end control_garra;
 
-architecture generador of ServoPWM is
-    constant PERIOD_20MS : integer := 540000;
-    signal contador      : integer range 0 to PERIOD_20MS - 1 := 0;
+architecture Behavioral of control_garra is
+
+    -- Señales para leer el estado del encoder
+    signal enc_clk_last : STD_LOGIC := '1';
     
-    constant DUTY_MIN : integer := 27000; -- 1ms
-    constant DUTY_MAX : integer := 54000; -- 2ms
-    
-    signal current_duty : integer range 0 to PERIOD_20MS - 1 := DUTY_MIN;
-    
-    -- AJUSTE DE VELOCIDAD:
-    -- Ahora que estamos sincronizados, 1 significa que se mueve cada 20ms.
-    -- Prueba con valores entre 1 y 5.
-    constant SPEED_DIVIDER : integer := 2; 
-    signal speed_counter   : integer range 0 to SPEED_DIVIDER := 0;
+    -- Contador de posición del servo (De 0 a 100)
+    -- 0 = 1ms (Aprox 0°), 100 = 2ms (Aprox 180°)
+    signal pos_contador : integer range 0 to 100 := 0; 
+
+    -- Señales para el generador de PWM
+    signal pwm_counter : integer range 0 to 540000 := 0; -- Para los 20ms (50Hz)
+    signal duty_cycle  : integer := 27000; -- Empieza en 1ms (Posición base)
 
 begin
 
+    -- BLOQUE 1: Lectura del Encoder y Lógica de Posición
     process(clk, rst)
     begin
-        if rst = '0' then 
-            contador <= 0;
-            current_duty <= DUTY_MIN;
-            speed_counter <= 0;
+        -- Reset asíncrono (si lo conectaste a un botón a GND)
+        if rst = '0' then  
+            pos_contador <= 0;
+            enc_clk_last <= '1';
+            
+        -- Lógica síncrona evaluada cada ciclo de reloj
         elsif rising_edge(clk) then
             
-            -- 1. Generador del periodo de 20ms
-            if contador < PERIOD_20MS - 1 then
-                contador <= contador + 1;
+            -- Prioridad al botón del encoder: si se presiona, regresa a 0
+            if cerrar = '0' then
+                pos_contador <= 0;
             else
-                contador <= 0; -- REINICIO DEL CICLO PWM
-
-                -- 2. Lógica de rampa (Solo ocurre una vez cada 20ms)
-                if speed_counter < SPEED_DIVIDER then
-                    speed_counter <= speed_counter + 1;
-                else
-                    speed_counter <= 0;
+                -- Detectar el giro: cuando 'enc_clk' pasa de '1' a '0'
+                if (enc_clk_last = '1' and enc_clk = '0') then
                     
-                    if cerrar = '1' then
-                        if current_duty < DUTY_MAX then
-                            -- Subimos de 400 en 400 para que se note el movimiento
-                            current_duty <= current_duty + 400; 
+                    if enc_dt = '1' then
+                        -- Sentido 1: Sumar (Avanza 2 pasos para no girar tanto la perilla)
+                        if pos_contador <= 98 then 
+                            pos_contador <= pos_contador + 2;
                         end if;
                     else
-                        if current_duty > DUTY_MIN then
-                            current_duty <= current_duty - 400;
+                        -- Sentido 2: Restar
+                        if pos_contador >= 2 then
+                            pos_contador <= pos_contador - 2;
                         end if;
                     end if;
+                    
                 end if;
             end if;
+            
+            -- Guardar el estado actual para la siguiente comparación
+            enc_clk_last <= enc_clk;
+            
         end if;
     end process;
 
-    -- LÓGICA PARA TRANSISTOR 2N2222 (INVERSOR)
-    pwm_out <= '0' when contador < current_duty else '1';
+    -- BLOQUE 2: Generación Física de la Señal PWM
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            
+            -- Mapear la posición al tiempo del pulso
+            -- Base: 27,000 ticks (1ms). Máximo: 27,000 + (100 * 270) = 54,000 ticks (2ms)
+            duty_cycle <= 27000 + (pos_contador * 270);
 
-end generador;
+            -- Contador principal para la frecuencia de 50Hz (20ms total)
+            if pwm_counter < 540000 then
+                pwm_counter <= pwm_counter + 1;
+            else
+                pwm_counter <= 0;
+            end if;
+
+            -- Generar el pulso alto (Lógica directa)
+            if pwm_counter < duty_cycle then
+                pwm_out <= '1';
+            else
+                pwm_out <= '0';
+            end if;
+            
+        end if;
+    end process;
+
+end Behavioral;
