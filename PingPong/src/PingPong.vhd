@@ -1,18 +1,3 @@
--- ============================================================
---  PING PONG - Tang Nano FPGA
---
---  ST_IDLE    : solo al reset. Parpadean LEDs 0 y 7.
---               Quien quiera saca presionando su boton.
---               J1 -> pelota sale desde izquierda hacia derecha
---               J2 -> pelota sale desde derecha hacia izquierda
---
---  ST_MOVING  : pelota se mueve LED a LED
---  ST_WAIT_HIT: pelota en extremo, parpadea, jugador debe golpear
---  ST_POINT   : pausa 2s con todos LEDs on, luego vuelve a ST_MOVING
---               desde el centro (sin pasar por IDLE)
---  ST_WIN     : parpadeo alternado al llegar a 9 puntos
--- ============================================================
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -34,7 +19,6 @@ architecture Behavioral of ping_pong_top is
     constant SPEED_0       : integer := 24_000_000;
     constant SPEED_1       : integer := 12_000_000;
     constant SPEED_2       : integer :=  6_000_000;
-    constant WINDOW_CYCLES : integer := 36_000_000;
 
     type state_t is (ST_IDLE, ST_MOVING, ST_WAIT_HIT, ST_POINT, ST_WIN);
 
@@ -74,8 +58,9 @@ begin
     db_p2  : debounce port map (CLK => CLK, BTN_IN => BTN_P2,   BTN_OUT => btn2_db);
     db_rst : debounce port map (CLK => CLK, BTN_IN => BTN_RESET, BTN_OUT => rst_db);
 
-    seg1 : seg7_decoder port map (digit => score_p1, seg => SEG_P1);
-    seg2 : seg7_decoder port map (digit => score_p2, seg => SEG_P2);
+    -- Displays intercambiados segun conexion fisica real
+    seg1 : seg7_decoder port map (digit => score_p1, seg => SEG_P2);
+    seg2 : seg7_decoder port map (digit => score_p2, seg => SEG_P1);
 
     process(CLK)
     begin
@@ -117,7 +102,6 @@ begin
 
                     -- ----------------------------------------
                     -- IDLE: solo tras reset
-                    -- Parpadean extremos, cualquiera saca
                     -- ----------------------------------------
                     when ST_IDLE =>
                         pause_cnt <= pause_cnt + 1;
@@ -171,15 +155,19 @@ begin
                             move_cnt <= move_cnt + 1;
                         end if;
 
-                        -- Presion incorrecta durante movimiento
-                        if btn1_press = '1' and ball_dir = '1' then
+                        -- Penalizacion por presionar antes de tiempo:
+                        -- J1 controla LED 0 (izquierda). Si presiona mientras
+                        -- la pelota va HACIA el (ball_dir='0'), es demasiado pronto.
+                        if btn1_press = '1' and ball_dir = '0' then
                             score_p2    <= score_p2 + 1;
                             pause_cnt   <= 0;
                             rally_cnt   <= 0;
                             speed_level <= 0;
                             state       <= ST_POINT;
                         end if;
-                        if btn2_press = '1' and ball_dir = '0' then
+                        -- J2 controla LED 7 (derecha). Si presiona mientras
+                        -- la pelota va HACIA el (ball_dir='1'), es demasiado pronto.
+                        if btn2_press = '1' and ball_dir = '1' then
                             score_p1    <= score_p1 + 1;
                             pause_cnt   <= 0;
                             rally_cnt   <= 0;
@@ -188,9 +176,11 @@ begin
                         end if;
 
                     -- ----------------------------------------
-                    -- WAIT_HIT
+                    -- WAIT_HIT: ventana = current_speed (mismo
+                    -- tiempo que tarda un paso de la pelota)
                     -- ----------------------------------------
                     when ST_WAIT_HIT =>
+                        -- Parpadeo rapido para avisar al jugador
                         if wait_cnt mod (current_speed / 4) < (current_speed / 8) then
                             leds_reg(ball_pos) <= '1';
                         else
@@ -198,6 +188,7 @@ begin
                         end if;
                         wait_cnt <= wait_cnt + 1;
 
+                        -- J1 golpea en extremo izquierdo (pos = 0)
                         if btn1_press = '1' then
                             if ball_pos = 0 then
                                 ball_dir  <= '1';
@@ -209,6 +200,7 @@ begin
                                 end if;
                                 state <= ST_MOVING;
                             else
+                                -- Presiono en el lado equivocado
                                 score_p2    <= score_p2 + 1;
                                 pause_cnt   <= 0;
                                 rally_cnt   <= 0;
@@ -217,6 +209,7 @@ begin
                             end if;
                         end if;
 
+                        -- J2 golpea en extremo derecho (pos = 7)
                         if btn2_press = '1' then
                             if ball_pos = 7 then
                                 ball_dir  <= '0';
@@ -236,7 +229,8 @@ begin
                             end if;
                         end if;
 
-                        if wait_cnt >= WINDOW_CYCLES then
+                        -- Timeout = mismo tiempo que un paso de la pelota
+                        if wait_cnt >= current_speed then
                             if ball_pos = 0 then
                                 score_p2 <= score_p2 + 1;
                             else
@@ -249,8 +243,7 @@ begin
                         end if;
 
                     -- ----------------------------------------
-                    -- POINT: pausa 2s, luego directo a ST_MOVING
-                    -- desde el centro, sin volver a IDLE
+                    -- POINT: pausa 2s, luego ST_MOVING desde centro
                     -- ----------------------------------------
                     when ST_POINT =>
                         leds_reg  <= (others => '1');
@@ -268,7 +261,7 @@ begin
                         end if;
 
                     -- ----------------------------------------
-                    -- WIN
+                    -- WIN: parpadeo alternado hasta reset
                     -- ----------------------------------------
                     when ST_WIN =>
                         pause_cnt <= pause_cnt + 1;
